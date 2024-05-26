@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜数字游戏</title>
+    <script>
+        function generateNumber() {
+            return Math.floor(Math.random() * 100) + 1;
+        }
+
+        function guessNumber() {
+            var numberToGuess = generateNumber();
+            var guess = null;
+            var numGuesses = 0;
+            var guessInput = document.getElementById('guessInput');
+            var resultElement = document.getElementById('result');
+
+            while (guess !== numberToGuess) {
+                guess = parseInt(guessInput.value, 10);
+
+                if (isNaN(guess)) {
+                    resultElement.textContent = '请输入一个整数！';
+                    return;
+                }
+
+                numGuesses++;
+
+                if (guess < numberToGuess) {
+                    resultElement.textContent = '你猜的数字太小了！';
+                } else if (guess > numberToGuess) {
+                    resultElement.textContent = '你猜的数字太大了！';
+                }
+
+                // 清空输入框以便下次输入
+                guessInput.value = '';
+            }
+
+            resultElement.textContent = `恭喜你，你猜对了！这个数字就是 ${numberToGuess}。你一共猜了 ${numGuesses} 次。`;
+        }
+    </script>
+</head>
+<body>
+    <h1>猜数字游戏</h1>
+    <input type="number" id="guessInput" placeholder="请输入你猜的数字">
+    <button onclick="guessNumber()">猜一猜</button>
+    <p id="result"></p >
+</body>
+</html>
